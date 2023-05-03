@@ -24,42 +24,24 @@ public class FruitBase implements Serializable {
         return cargo;
     }
 
-    public void exportCatalogue(String fileName) {
-        try {
-            FileOutputStream fileOut = new FileOutputStream(fileName);
-            ObjectOutputStream out = new ObjectOutputStream(fileOut);
-            out.writeObject(fruitCatalogue);
-            out.close();
-            fileOut.close();
-            System.out.println("Каталог экспортирован " + fileName);
-            System.out.println(fruitCatalogue); //для проверки значений
-        } catch (FileNotFoundException e) {
-            System.err.println("Не найден файл " + fileName);
-        } catch (IOException e) {
-            System.err.println("Ошибка при экспорте каталога в файл " + fileName);
-        } catch (Exception e) {
-            System.err.println("Непредвиденная ошибка при экспорте каталога из файла " + fileName);
-        }
+    public void exportCatalogue(String fileName) throws IOException {
+        FileOutputStream fileOut = new FileOutputStream(fileName);
+        ObjectOutputStream out = new ObjectOutputStream(fileOut);
+        out.writeObject(fruitCatalogue);
+        out.close();
+        fileOut.close();
+        System.out.println("Каталог экспортирован " + fileName);
+        System.out.println(fruitCatalogue); //для проверки значений
     }
 
-    public void importCatalogue(String fileName) {
-        try {
-            FileInputStream fileIn = new FileInputStream(fileName);
-            ObjectInputStream in = new ObjectInputStream(fileIn);
-            fruitCatalogue = (FruitCatalogue) in.readObject();
-            in.close();
-            fileIn.close();
-            System.out.println("Каталог импортирован из файла: " + fileName);
-            System.out.println(fruitCatalogue); //для проверки значений
-        } catch (FileNotFoundException e) {
-            System.err.println("Не найден файл " + fileName);
-        } catch (IOException e) {
-            System.err.println("Ошибка при импорте каталога из файла " + fileName);
-        } catch (ClassNotFoundException e) {
-            System.err.println("Невозможно импортировать каталог из файла " + fileName + ": неподдерживаемая версия");
-        } catch (Exception e) {
-            System.err.println("Непредвиденная ошибка при импорте каталога из файла " + fileName);
-        }
+    public void importCatalogue(String fileName) throws IOException, ClassNotFoundException {
+        FileInputStream fileIn = new FileInputStream(fileName);
+        ObjectInputStream in = new ObjectInputStream(fileIn);
+        fruitCatalogue = (FruitCatalogue) in.readObject();
+        in.close();
+        fileIn.close();
+        System.out.println("Каталог импортирован из файла: " + fileName);
+        System.out.println(fruitCatalogue); //для проверки значений
     }
 }
 

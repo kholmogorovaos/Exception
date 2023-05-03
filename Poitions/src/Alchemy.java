@@ -1,3 +1,5 @@
+import elements.basic.NatureElement;
+
 import java.util.NoSuchElementException;
 
 public class Alchemy {

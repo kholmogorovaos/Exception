@@ -5,6 +5,8 @@ import com.customers.FreshCustomer;
 import com.customers.UniqueCustomer;
 import com.fruitbase.fruits.Fruit;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.List;
 
 public class Simulation {
@@ -29,9 +31,27 @@ public class Simulation {
                 }
             }
             if (exportFlag) {
-                fruitBase.exportCatalogue(fileName);
+                try {
+                    fruitBase.exportCatalogue(fileName);
+                } catch (FileNotFoundException e) {
+                    System.err.println("Не найден файл " + fileName);
+                } catch (IOException e) {
+                    System.err.println("Ошибка при экспорте каталога в файл " + fileName);
+                } catch (Exception e) {
+                    System.err.println("Непредвиденная ошибка при экспорте каталога из файла " + fileName);
+                }
             } else if (importFlag) {
-                fruitBase.importCatalogue(fileName);
+                try {
+                    fruitBase.importCatalogue(fileName);
+                } catch (FileNotFoundException e) {
+                    System.err.println("Не найден файл " + fileName);
+                } catch (IOException e) {
+                    System.err.println("Ошибка при импорте каталога из файла " + fileName);
+                } catch (ClassNotFoundException e) {
+                    System.err.println("Невозможно импортировать каталог из файла " + fileName + ": неподдерживаемая версия");
+                } catch (Exception e) {
+                    System.err.println("Непредвиденная ошибка при импорте каталога из файла " + fileName);
+                }
             } else {
                 Customer[] customers = {new FreshCustomer("Покупатель свежих фруктов"), new UniqueCustomer("Покупатель уникальных фруктов")};
                 for (Customer customer : customers) {
